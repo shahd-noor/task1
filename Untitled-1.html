@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+   
+    <title>School Managment System</title>
+
+
+    <style>
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+html{
+    box-sizing:border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.container {
+    justify-content: center;
+    margin: auto; 
+    width:60%; 
+}
+
+
+
+@media screen and (max-width:200px) {
+ .container {
+    width:100%;
+  }
+}
+div{
+  display: flex;
+  justify-content: center;
+
+} 
+
+h1 {
+  text-align: center;
+}
+
+form{
+  background-color:lightgray;
+  width: 100%;
+}
+
+label{
+  width:40%;
+  padding: 12px 10px;
+  margin: 4px 0;
+  font-size:18px;
+}
+
+table, td, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 8px 15px;
+        }
+
+table.list{
+  width:100%;
+  text-align: left;
+}
+
+tr:nth-child(even),table.list thead>tr {
+    border-color: #DD0;
+    background-color: #DD0;
+    color: #700;
+}
+
+input[type=text], input[type=number] {
+  border-color: #DD0;
+  color: #700;
+  background-color: #DD0;
+  width: 90%;
+  padding: 15px 30px ;
+  margin: 5px ;
+  display: inline-block;
+  box-sizing: border-box;
+  font-size:15px;
+}
+
+
+input[type=submit]{
+  background-color: #FFF;
+  color: #00C;
+  display: grid;
+  width: 30%;
+  padding: 15px 30px;
+  margin: 8px 8px 8px 80%;
+  border: 5px ;
+  cursor: pointer;
+  font-size: 15px;
+
+}
+
+a{
+  cursor: pointer;
+  text-decoration: underline;
+  color: #700;
+  margin-right: 5px;
+}
+
+label.validation-error{
+  color:  #700;
+  font-size: 15px;
+  margin: 8px 5px;
+}
+
+.hide{
+  display:none;
+}
+
+    </style>
+</head>
+<body>
+    
+    <body>
+
+		<h1>School Managment System </h1>
+        <div class = "container">
+
+			<form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+                </br></br>
+			<div>
+				<label>Student Full Name:</label>
+				<input type="text" name="name" id="name" placeholder="Enter Student Full Name"  />
+			</div>
+            
+            <label class="validation-error hide" id="nameValidationError">*Please Enter Student Full Name</label>
+		
+            <div>
+				<label>Student id Number:</label>
+				<input type="number" name="idNumber" id="idNumber" placeholder="Enter Student ID Number"  />
+			</div>
+
+			<div>
+			    <label>Student GDPA:</label>
+	     	    <input type="number" name="gdpa" id="gdpa" placeholder="Enter Student gdpa" />
+			</div>
+					 
+			<div  class="form-action-buttons">
+				<input  type="submit" value="Submit">
+			</div>
+
+			</form>
+		    
+</div>
+
+</br>
+		
+<div class="container">
+	<table class="list" id="studentList">
+	<thead>
+	<tr>
+		<th>Student Name</th>
+		<th>Student id</th>
+		<th>Student gdpa</th>
+		<th>Update/Delate</th>
+	</tr>
+    </thead>
+	<tbody>
+    </tbody>
+				
+    </table>
+	</td>
+	</tr>
+    </table>
+</div>
+
+    <script>
+      var students = [];
+var selectedRow = null;
+function onFormSubmit() {
+    if (validate()) {
+        var students = readDataForm();
+        if (selectedRow == null)
+            insertNewRecord(students);
+
+        else
+            updateRecord(students);
+        resetForm();
+    }
+}
+
+function validate() {
+    isValid = true;
+    if (document.getElementById("name").value == "") {
+        isValid = false;
+        document.getElementById("nameValidationError").classList.remove("hide");
+    } else {
+        isValid = true;
+        if (!document.getElementById("nameValidationError").classList.contains("hide"))
+            document.getElementById("nameValidationError").classList.add("hide");
+    }
+    return isValid;
+}
+
+function resetForm() {
+    document.getElementById("name").value = "";
+    document.getElementById("idNumber").value = "";
+    document.getElementById("gdpa").value = "";
+    selectedRow = null;
+}
+
+
+function readDataForm() {
+    var students = {};
+    students["name"] = document.getElementById("name").value;
+    students["idNumber"] = document.getElementById("idNumber").value;
+    students["gdpa"] = document.getElementById("gdpa").value;
+    return students;
+}
+function insertNewRecord(data) {
+    var table = document.getElementById("studentList").getElementsByTagName('tbody')[0];
+    var newRow = table.insertRow(table.length);
+    cell1 = newRow.insertCell(0);
+    cell1.innerHTML = data.name;
+    cell2 = newRow.insertCell(1);
+    cell2.innerHTML = data.idNumber;
+    cell3 = newRow.insertCell(2);
+    cell3.innerHTML = data.gdpa;
+    cell3 = newRow.insertCell(3);
+    cell3.innerHTML = `<a onClick="onUpdate(this)">Update</a>
+                       <a onClick="onDelete(this)">Delete</a>`;
+
+}
+
+function onUpdate(td) {
+    selectedRow = td.parentElement.parentElement;
+    document.getElementById("name").value = selectedRow.cells[0].innerHTML;
+    document.getElementById("idNumber").value = selectedRow.cells[1].innerHTML;
+    document.getElementById("gdpa").value = selectedRow.cells[2].innerHTML;
+}
+function updateRecord(students) {
+    selectedRow.cells[0].innerHTML = students.name;
+    selectedRow.cells[1].innerHTML = students.idNumber;
+    selectedRow.cells[2].innerHTML = students.gdpa;
+}
+function onDelete(td) {
+    if (confirm('Click OK if you want to delete this recording!')) {
+        row = td.parentElement.parentElement;
+        document.getElementById("studentList").deleteRow(row.rowIndex);
+        resetForm();
+    }
+}
+
+
+    </script>
+	</body>
+</html>

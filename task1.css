@@ -1,0 +1,111 @@
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+html{
+    box-sizing:border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.container {
+    justify-content: center;
+    margin: auto; 
+    width:60%; 
+}
+
+
+
+@media screen and (max-width:200px) {
+ .container {
+    width:100%;
+  }
+}
+div{
+  display: flex;
+  justify-content: center;
+
+} 
+
+h1 {
+  text-align: center;
+}
+
+form{
+  background-color:lightgray;
+  width: 100%;
+}
+
+label{
+  width:40%;
+  padding: 12px 10px;
+  margin: 4px 0;
+  font-size:18px;
+}
+
+table, td, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 8px 15px;
+        }
+
+table.list{
+  width:100%;
+  text-align: left;
+}
+
+tr:nth-child(even),table.list thead>tr {
+    border-color: #DD0;
+    background-color: #DD0;
+    color: #700;
+}
+
+input[type=text], input[type=number] {
+  border-color: #DD0;
+  color: #700;
+  background-color: #DD0;
+  width: 90%;
+  padding: 15px 30px ;
+  margin: 5px ;
+  display: inline-block;
+  box-sizing: border-box;
+  font-size:15px;
+}
+
+
+input[type=submit]{
+  background-color: #FFF;
+  color: #00C;
+  display: grid;
+  width: 30%;
+  padding: 15px 30px;
+  margin: 8px 8px 8px 80%;
+  border: 5px ;
+  cursor: pointer;
+  font-size: 15px;
+
+}
+
+a{
+  cursor: pointer;
+  text-decoration: underline;
+  color: #700;
+  margin-right: 5px;
+}
+
+label.validation-error{
+  color:  #700;
+  font-size: 15px;
+  margin: 8px 5px;
+}
+
+.hide{
+  display:none;
+}
+
+ 
